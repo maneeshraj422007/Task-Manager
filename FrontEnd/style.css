@@ -1,0 +1,216 @@
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    width: 350px;
+    border-radius: 10px;
+}
+
+/* Input */
+.input-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 45px;   /* 🔥 locks height */
+}
+
+/* Hide smoothly instead of removing */
+.hidden {
+    visibility: hidden;
+    position: absolute;
+    opacity: 0;
+}
+
+.input-section input {
+    flex: 1;
+    padding: 8px;
+}
+
+button {
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    background: #333;
+    color: white;
+    border-radius: 5px;
+}
+
+.search-btn {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+    background: #555;
+    border-radius: 6px;
+}
+
+/* Warning */
+.warning {
+    opacity: 0;
+    background: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 8px;
+    width: 100%;
+    transition: opacity 0.5s ease;
+}
+
+/* Search */
+.search-section {
+    display: flex;
+    overflow: hidden;
+
+    width: 40px;
+    opacity: 0;
+
+    margin-left: auto;   /* 🔥 push to right */
+
+    transition: width 0.35s ease, opacity 0.3s ease;
+}
+
+/* ACTIVE */
+.search-section.active {
+    width: 100%;
+    opacity: 1;
+}
+.search-section input {
+    flex: 1;
+    padding: 8px;
+}
+
+/* Filters */
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.filter-section button {
+    flex: 1;
+    background: #555;
+}
+
+.filter-section button.active {
+    background: #4CAF50;
+}
+
+/* Dashboard */
+.dashboard {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.card {
+    flex: 1;
+    background: #fafafa;
+    padding: 6px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* Tasks */
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+li:active {
+    transform: scale(0.98);
+}
+
+li span {
+    flex: 1;
+}
+
+li button {
+    background: none;
+}
+
+li button i {
+    color: red;
+}
+
+/* Completed */
+.completed {
+    background: #4CAF50;
+    color: white;
+}
+
+/* 🔥 Fade in */
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔥 Slide out */
+.slide-out {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+/* INPUT WRAPPER */
+.input-wrapper {
+    position: relative;
+    flex: 1;
+	display: flex;
+}
+
+/* INPUT */
+.input-wrapper input {
+    width: 100%;
+    padding: 10px 70px 10px 10px; /* space for button */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+/* BUTTON INSIDE INPUT */
+.add-inside {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    padding: 6px 12px;
+    font-size: 13px;
+    background: #333;
+    border-radius: 5px;
+}

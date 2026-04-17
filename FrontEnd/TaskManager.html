@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Task Manager</h1>
+
+    <!-- Input -->
+    <div class="input-section" id="taskSection">
+
+        <div class="input-wrapper">
+            <input type="text" id="taskInput" placeholder="Enter task...">
+            <button onclick="addTask()" class="add-inside">Add</button>
+        </div>
+
+        <button onclick="toggleSearch()" class="search-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+    </div>
+
+    <!-- Search -->
+    <div class="search-section" id="searchSection">
+        <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTasks()">
+        <button onclick="toggleSearch()" class="search-btn" id="searchBtn">
+    <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-section">
+        <button onclick="setFilter('all', event)" class="active">All</button>
+        <button onclick="setFilter('completed', event)">Completed</button>
+        <button onclick="setFilter('pending', event)">Pending</button>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <div class="card">
+            <h3 id="totalTasks">0</h3>
+            <p>Total</p>
+        </div>
+        <div class="card">
+            <h3 id="completedTasks">0</h3>
+            <p>Completed</p>
+        </div>
+        <div class="card">
+            <h3 id="pendingTasks">0</h3>
+            <p>Pending</p>
+        </div>
+    </div>
+
+    <!-- Tasks -->
+    <ul id="taskList"></ul>
+
+    <!-- Warning (bottom) -->
+    <div id="warningMsg" class="warning"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
