@@ -11,28 +11,65 @@ body {
     padding: 20px;
     width: 350px;
     border-radius: 10px;
+	overflow: hidden;
 }
 
-/* Input */
-.input-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 45px;   /* 🔥 locks height */
+/* TITLE */
+h1 {
+    text-align: center;
 }
 
-/* Hide smoothly instead of removing */
-.hidden {
-    visibility: hidden;
+/* WRAPPER */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+	overflow: hidden;
+}
+
+/* STACKED INPUT + SEARCH */
+.input-section,
+.search-section {
     position: absolute;
-    opacity: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    transition: all 0.4s ease;
 }
 
-.input-section input {
+/* Inputs */
+.input-section input,
+.search-section input {
     flex: 1;
     padding: 8px;
 }
 
+/* Default */
+.input-section {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.search-section {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+/* Active */
+.container.search-active .input-section {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.container.search-active .search-section {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Buttons */
 button {
     padding: 8px;
     border: none;
@@ -41,56 +78,14 @@ button {
     color: white;
     border-radius: 5px;
 }
-
+button:active {
+    transform: scale(0.95);
+}
 .search-btn {
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 16px;
     background: #555;
-    border-radius: 6px;
 }
 
-/* Warning */
-.warning {
-    opacity: 0;
-    background: #ff4d4d;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 8px;
-    width: 100%;
-    transition: opacity 0.5s ease;
-}
-
-/* Search */
-.search-section {
-    display: flex;
-    overflow: hidden;
-
-    width: 40px;
-    opacity: 0;
-
-    margin-left: auto;   /* 🔥 push to right */
-
-    transition: width 0.35s ease, opacity 0.3s ease;
-}
-
-/* ACTIVE */
-.search-section.active {
-    width: 100%;
-    opacity: 1;
-}
-.search-section input {
-    flex: 1;
-    padding: 8px;
-}
-
-/* Filters */
+/* FILTERS */
 .filter-section {
     display: flex;
     gap: 10px;
@@ -106,7 +101,7 @@ button {
     background: #4CAF50;
 }
 
-/* Dashboard */
+/* DASHBOARD */
 .dashboard {
     display: flex;
     gap: 8px;
@@ -121,9 +116,10 @@ button {
     text-align: center;
 }
 
-/* Tasks */
+/* TASK LIST */
 ul {
     padding: 0;
+    margin-top: 10px;
 }
 
 li {
@@ -135,12 +131,16 @@ li {
     background: #f9f9f9;
     border-radius: 6px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 li:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
 li span {
@@ -159,23 +159,24 @@ li button i {
 .completed {
     background: #4CAF50;
     color: white;
+    transition: all 0.3s ease;
 }
 
-/* 🔥 Fade in */
+/* Fade in */
 .fade-in {
     opacity: 0;
-    transform: translateY(10px);
+    transform: scale(0.95);
     animation: fadeIn 0.4s ease forwards;
 }
 
 @keyframes fadeIn {
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1);
     }
 }
 
-/* 🔥 Slide out */
+/* Slide out */
 .slide-out {
     animation: slideOut 0.3s ease forwards;
 }
@@ -183,34 +184,19 @@ li button i {
 @keyframes slideOut {
     to {
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(150%);
     }
 }
-/* INPUT WRAPPER */
-.input-wrapper {
-    position: relative;
-    flex: 1;
-	display: flex;
-}
 
-/* INPUT */
-.input-wrapper input {
+/* WARNING */
+.warning {
+    opacity: 0;
+    transform: translateY(10px);
+    background: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
     width: 100%;
-    padding: 10px 70px 10px 10px; /* space for button */
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    outline: none;
-}
-
-/* BUTTON INSIDE INPUT */
-.add-inside {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    
-    padding: 6px 12px;
-    font-size: 13px;
-    background: #333;
-    border-radius: 5px;
+    transition: all 0.5s ease;
 }

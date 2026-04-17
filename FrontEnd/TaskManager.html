@@ -10,26 +10,24 @@
 <div class="container">
     <h1>Task Manager</h1>
 
-    <!-- Input -->
-    <div class="input-section" id="taskSection">
+    <!-- INPUT + SEARCH WRAPPER -->
+    <div class="input-wrapper">
 
-        <div class="input-wrapper">
+        <!-- Input -->
+        <div class="input-section" id="taskSection">
             <input type="text" id="taskInput" placeholder="Enter task...">
-            <button onclick="addTask()" class="add-inside">Add</button>
+            <button onclick="addTask()">Add</button>
+            <button onclick="toggleSearch()" class="search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </div>
 
-        <button onclick="toggleSearch()" class="search-btn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        <!-- Search -->
+        <div class="search-section" id="searchSection">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTasks()">
+            <button onclick="toggleSearch()">✖</button>
+        </div>
 
-    </div>
-
-    <!-- Search -->
-    <div class="search-section" id="searchSection">
-        <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTasks()">
-        <button onclick="toggleSearch()" class="search-btn" id="searchBtn">
-    <i class="fa-solid fa-magnifying-glass"></i>
-</button>
     </div>
 
     <!-- Filters -->
@@ -55,10 +53,9 @@
         </div>
     </div>
 
-    <!-- Tasks -->
     <ul id="taskList"></ul>
 
-    <!-- Warning (bottom) -->
+    <!-- WARNING AT BOTTOM -->
     <div id="warningMsg" class="warning"></div>
 
 </div>

@@ -1,11 +1,10 @@
-const API_URL = "http://localhost:5000/tasks";
+const API_URL = "https://task-manager-dlkw.onrender.com/tasks";
 
 let currentFilter = "all";
 
 window.onload = function () {
     loadTasks();
 
-    // ✅ ENTER KEY FIX
     document.getElementById("taskInput").addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -75,7 +74,6 @@ function createTask(task) {
         <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
     `;
 
-    // Toggle
     li.addEventListener("click", async function (e) {
         if (e.target.closest(".delete-btn")) return;
 
@@ -83,7 +81,6 @@ function createTask(task) {
         loadTasks();
     });
 
-    // Delete
     li.querySelector(".delete-btn").addEventListener("click", function (e) {
         e.stopPropagation();
 
@@ -98,7 +95,7 @@ function createTask(task) {
     document.getElementById("taskList").appendChild(li);
 }
 
-// Filter
+// Search
 function filterTasks() {
     let searchText = document.getElementById("searchInput").value.toLowerCase();
 
@@ -108,7 +105,7 @@ function filterTasks() {
     });
 }
 
-// Filter buttons
+// Filter
 function setFilter(filter, event) {
     currentFilter = filter;
 
@@ -137,34 +134,20 @@ function updateDashboard() {
     document.getElementById("pendingTasks").innerText = pending;
 }
 
-// Search toggle (UNCHANGED)
+// Toggle search
 function toggleSearch() {
-    let task = document.getElementById("taskSection");
-    let search = document.getElementById("searchSection");
-    let btn = document.getElementById("searchBtn");
+    const container = document.querySelector(".container");
 
-    if (search.classList.contains("active")) {
-        // CLOSE
+    container.classList.toggle("search-active");
 
-        search.classList.remove("active");
+    const icon = document.querySelector(".search-btn i");
 
-        setTimeout(() => {
-            search.classList.add("hidden");
-            task.classList.remove("hidden");
-
-            btn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
-        }, 300); // 🔥 after animation
-
+    if (container.classList.contains("search-active")) {
+        icon.classList.replace("fa-magnifying-glass", "fa-xmark");
     } else {
-        // OPEN
+        icon.classList.replace("fa-xmark", "fa-magnifying-glass");
 
-        task.classList.add("hidden");
-        search.classList.remove("hidden");
-
-        setTimeout(() => {
-            search.classList.add("active");
-        }, 10);
-
-        btn.innerHTML = '<i class="fa-solid fa-times"></i>';
+        document.getElementById("searchInput").value = "";
+        filterTasks();
     }
 }
