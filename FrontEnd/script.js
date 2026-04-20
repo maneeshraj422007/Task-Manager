@@ -1,6 +1,11 @@
-const API_URL = "https://task-manager-dlkw.onrender.com/tasks";
+const BASE_URL = "http://localhost:5000";
+
+let token = localStorage.getItem("token");
+let tasks = [];
+const API_URL = "http://localhost:5000";
 
 let currentFilter = "all";
+
 
 window.onload = function () {
     loadTasks();
@@ -12,6 +17,32 @@ window.onload = function () {
         }
     });
 };
+
+/* LOGIN */
+async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const res = await fetch(BASE_URL + "/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (data.token) {
+        localStorage.setItem("token", data.token);
+
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("appSection").style.display = "block";
+
+        loadTasks();
+    } else {
+        alert("Login failed");
+    }
+}
+
 
 // Load tasks
 async function loadTasks() {
@@ -150,4 +181,17 @@ function toggleSearch() {
         document.getElementById("searchInput").value = "";
         filterTasks();
     }
+}
+
+/* LOGOUT */
+function logout() {
+    localStorage.removeItem("token");
+    location.reload();
+}
+
+/* AUTO LOGIN */
+if (token) {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("appSection").style.display = "block";
+    loadTasks();
 }

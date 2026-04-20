@@ -9,6 +9,13 @@
 
 <div class="container">
     <h1>Task Manager</h1>
+	
+	 <!-- LOGIN -->
+    <div id="loginSection">
+        <input id="username" placeholder="Username">
+        <input id="password" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
 
     <!-- INPUT + SEARCH WRAPPER -->
     <div class="input-wrapper">
@@ -54,6 +61,8 @@
     </div>
 
     <ul id="taskList"></ul>
+	
+	<button class="logout-btn" onclick="logout()">Logout</button>
 
     <!-- WARNING AT BOTTOM -->
     <div id="warningMsg" class="warning"></div>
