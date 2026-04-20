@@ -1,21 +1,32 @@
+function getHeaders(isJson = false) {
+    const token = localStorage.getItem("token");
+
+    console.log("TOKEN BEING SENT:", localStorage.getItem("token")); // DEBUG
+
+    return {
+        ...(isJson && { "Content-Type": "application/json" }),
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    };
+}
 const BASE_URL = "http://localhost:5000";
 
 let token = localStorage.getItem("token");
+console.log("TOKEN:", localStorage.getItem("token"));
 let tasks = [];
-const API_URL = "http://localhost:5000";
-
-let currentFilter = "all";
+const API_URL = "http://localhost:5000/tasks";
 
 
 window.onload = function () {
-    loadTasks();
-
     document.getElementById("taskInput").addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
             e.preventDefault();
             addTask();
         }
     });
+	
+	if (token) {
+        loadTasks();
+    }
 };
 
 /* LOGIN */
@@ -33,6 +44,8 @@ async function login() {
 
     if (data.token) {
         localStorage.setItem("token", data.token);
+		token = data.token;
+		console.log("NEW TOKEN:", data.token);
 
         document.getElementById("loginSection").style.display = "none";
         document.getElementById("appSection").style.display = "block";
@@ -46,7 +59,12 @@ async function login() {
 
 // Load tasks
 async function loadTasks() {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    });
+
     const tasks = await res.json();
 
     const list = document.getElementById("taskList");
@@ -64,7 +82,13 @@ async function addTask() {
 
     if (text === "") return;
 
-    const res = await fetch(API_URL);
+    // ✅ FIX: Add Authorization here
+    const res = await fetch(API_URL, {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    });
+
     const tasks = await res.json();
 
     let exists = tasks.some(task => task.text.toLowerCase() === text.toLowerCase());
@@ -80,11 +104,16 @@ async function addTask() {
         return;
     }
 
+    // hide warning if valid
     warning.style.opacity = "0";
 
+    // ✅ Add task
     await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         body: JSON.stringify({ text })
     });
 
@@ -108,7 +137,12 @@ function createTask(task) {
     li.addEventListener("click", async function (e) {
         if (e.target.closest(".delete-btn")) return;
 
-        await fetch(`${API_URL}/${task._id}`, { method: "PUT" });
+        await fetch(`${API_URL}/${task._id}`, {
+    method: "PUT",
+    headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+});
         loadTasks();
     });
 
@@ -118,7 +152,12 @@ function createTask(task) {
         li.classList.add("slide-out");
 
         setTimeout(async () => {
-            await fetch(`${API_URL}/${task._id}`, { method: "DELETE" });
+            await fetch(`${API_URL}/${task._id}`, {
+    method: "DELETE",
+    headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+});
             loadTasks();
         }, 300);
     });

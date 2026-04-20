@@ -39,16 +39,29 @@ const User = mongoose.model("User", userSchema);
 /* ================== AUTH MIDDLEWARE ================== */
 
 function auth(req, res, next) {
-    const token = req.headers.authorization;
+    const authHeader = req.header("Authorization");
 
-    if (!token) return res.status(401).json({ message: "No token" });
+    if (!authHeader) {
+        return res.status(401).json({ error: "No token provided" });
+    }
+
+    // Extract token from "Bearer TOKEN"
+    const token = authHeader.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Invalid token format" });
+    }
 
     try {
-        const decoded = jwt.verify(token, "secretkey");
+        // ✅ SAME SECRET USED EVERYWHERE
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // ✅ FIX: store correct user id
         req.userId = decoded.id;
+
         next();
-    } catch {
-        res.status(401).json({ message: "Invalid token" });
+    } catch (err) {
+        return res.status(401).json({ error: "Invalid token" });
     }
 }
 
@@ -85,14 +98,19 @@ app.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Wrong password" });
 
-    const token = jwt.sign({ id: user._id }, "secretkey");
+    // ✅ USE ENV SECRET (IMPORTANT)
+    const token = jwt.sign(
+        { id: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+    );
 
     res.json({ token });
 });
 
-/* ================== TASK ROUTES (PROTECTED) ================== */
+/* ================== TASK ROUTES ================== */
 
-// Get tasks (ONLY USER TASKS)
+// Get tasks (user-specific)
 app.get("/tasks", auth, async (req, res) => {
     const tasks = await Task.find({ userId: req.userId });
     res.json(tasks);
@@ -116,7 +134,7 @@ app.put("/tasks/:id", auth, async (req, res) => {
         userId: req.userId
     });
 
-    if (!task) return res.status(404).json({ message: "Not found" });
+    if (!task) return res.status(404).json({ message: "Task not found" });
 
     task.completed = !task.completed;
     await task.save();
@@ -131,7 +149,7 @@ app.delete("/tasks/:id", auth, async (req, res) => {
         userId: req.userId
     });
 
-    res.json({ message: "Deleted" });
+    res.json({ message: "Task deleted" });
 });
 
 /* ================== SERVER ================== */
