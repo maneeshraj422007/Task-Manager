@@ -8,7 +8,7 @@ function getHeaders(isJson = false) {
         "Authorization": "Bearer " + localStorage.getItem("token")
     };
 }
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://task-manager-dlkw.onrender.com/";
 
 let token = localStorage.getItem("token");
 console.log("TOKEN:", localStorage.getItem("token"));
