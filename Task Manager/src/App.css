@@ -1,0 +1,188 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+.container {
+  width: 420px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* INPUT */
+.input-wrapper {
+  margin-bottom: 15px;
+}
+
+.input-section {
+  display: flex;
+  gap: 10px;
+}
+
+.input-section input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  border: none;
+  background: #333;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.search-btn {
+  width: 50px;
+}
+
+/* FILTERS */
+.filter-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-section button {
+  flex: 1;
+  background: #666;
+}
+
+.filter-section .active {
+  background: #4caf50;
+}
+
+/* DASHBOARD */
+.dashboard {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* TASK LIST */
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 14px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+li:hover {
+  transform: translateY(-2px);
+}
+
+.completed {
+  background: #4caf50;
+  color: white;
+}
+
+.delete-btn {
+  background: red;
+}
+
+/* WARNING */
+.warning {
+  margin-top: 15px;
+  background: #ff4d4d;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* LOGOUT */
+.logout-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* SEARCH ANIMATION */
+
+.input-wrapper {
+  position: relative;
+  height: 55px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.input-section,
+.search-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  transition: all 0.4s ease;
+}
+
+/* INPUT WIDTH */
+.input-section input,
+.search-section input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* NORMAL POSITION */
+.slide-center {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+/* MOVE LEFT */
+.slide-left {
+  transform: translateX(-120%);
+  opacity: 0;
+}
+
+/* MOVE RIGHT */
+.slide-right {
+  transform: translateX(120%);
+  opacity: 0;
+}
